@@ -1,0 +1,27 @@
+name: Run Israeli Stock Symbols Script
+
+on:
+  workflow_dispatch:   # הרצה ידנית
+  schedule:
+    - cron: "0 0 * * *"   # כל יום בחצות (UTC)
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install pandas requests yfinance fuzzywuzzy[speedup]
+
+      - name: Run script
+        run: |
+          python israeli_stock_symbols.py
